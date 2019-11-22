@@ -4,15 +4,16 @@ const fs = require("fs")
 const mkdirp = require('mkdirp');
 
 module.exports = {
-  getCurrentDirectoryBase: () => {
-    return path.basename(process.cwd());
-  },
 
-  getCurrentFiles: dir => {
-        return fs.readdirSync(dir).reduce(function(list, file) {
-          var name = path.join(dir, file);
-          var isDir = fs.statSync(name).isDirectory();
-          return list.concat(isDir ? fileList(name) : [name]);
+  getCurrentFiles: getCurrentFiles = dir => {
+      let absoluteDir = `${process.cwd()}/${dir}`
+      console.log(dir, typeof dir, process.cwd(), `${process.cwd()}/${dir}` 
+      )
+      console.log(fs.readdirSync(absoluteDir)) 
+        return fs.readdirSync(absoluteDir).reduce((list, name) => {
+          const absolutePath = path.join(absoluteDir, name);
+          const isDir = fs.statSync(absolutePath).isDirectory();
+          return list.concat(isDir ? [] : [{ path: absolutePath, name: name }]);
         }, []);
     },
   checkIfOutDirExists: dir => { 

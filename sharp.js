@@ -4,10 +4,9 @@ const sharp = require('sharp')
 
 module.exports = {
   runSharp: (config, file) => {
-    const fileName = file.substring(4);
-    return sharp(file)
+    return sharp(file.path)
     .resize(config.size)
-    .toFile(`${config.outDir}/${fileName}`)
+    .toFile(`${config.outDir}/${file.name}`)
   },
 };
 
