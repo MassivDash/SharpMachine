@@ -30,7 +30,10 @@ console.log('');
 
 const run = async () => {
   
-  const regexImage = new RegExp('\.(?:jpg|gif|png)', 'g');  
+  const regexImage = new RegExp('\.(?:jpg|gif|png)', 'g');
+  const regexJpg = new RegExp('\.(?:jpg)', 'g');
+  const regexPng = new RegExp('\.(?:png)', 'g');
+  const regexGif = new RegExp('\.(?:gif)', 'g');        
   const location = await inquirer.askInputQuestions();
 
     let filesList = [];
@@ -42,11 +45,17 @@ const run = async () => {
   }
   
   const imagesList = filesList.filter(( file ) => file.name.match(regexImage));
+  const pngList = filesList.filter(( file ) => file.name.match(regexPng));
+  const jpgList = filesList.filter(( file ) => file.name.match(regexJpg));
+  const gifList = filesList.filter(( file ) => file.name.match(regexGif));
   
   if(lodash.isEmpty(imagesList)){
-      process.exit('No image files')
+      console.log(
+        chalk.red(`No images`) 
+      )
+      process.exit('No images')
   }
-  console.log(chalk.yellowBright(`: ${imagesList.length}`))
+  console.log(chalk.yellowBright(`Total_Images: ${imagesList.length}, jpg: ${jpgList.length}, gif: ${gifList.length}`))
   
   const controls = await inquirer.askSharpQuestions();
   const config = {
@@ -58,6 +67,8 @@ files.checkIfOutDirExists(config.outDir);
 status.start();
 Promise.all(imagesList.map(image => sharp.runSharp(config, image)))
 status.stop();
+
+
 console.log('all done!');
 };
 

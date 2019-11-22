@@ -7,9 +7,6 @@ module.exports = {
 
   getCurrentFiles: getCurrentFiles = dir => {
       let absoluteDir = `${process.cwd()}/${dir}`
-      console.log(dir, typeof dir, process.cwd(), `${process.cwd()}/${dir}` 
-      )
-      console.log(fs.readdirSync(absoluteDir)) 
         return fs.readdirSync(absoluteDir).reduce((list, name) => {
           const absolutePath = path.join(absoluteDir, name);
           const isDir = fs.statSync(absolutePath).isDirectory();
