@@ -34,8 +34,7 @@ const run = async () => {
   const regexJpg = new RegExp('\.(?:jpg)', 'g');
   const regexPng = new RegExp('\.(?:png)', 'g');
   const regexGif = new RegExp('\.(?:gif)', 'g');        
-  const location = await inquirer.askInputQuestions();
-
+  const location = await inquirer.askInputQuestions(); 
     let filesList = [];
   try {
     filesList = await files.getCurrentFiles(location.inputDir);
@@ -44,6 +43,7 @@ const run = async () => {
     process.exit('wrong directory', e)
   }
   
+  let toFormat;
   const imagesList = filesList.filter(( file ) => file.name.match(regexImage));
   const pngList = filesList.filter(( file ) => file.name.match(regexPng));
   const jpgList = filesList.filter(( file ) => file.name.match(regexJpg));
@@ -56,25 +56,74 @@ const run = async () => {
       process.exit('No images')
   }
   console.log(chalk.yellowBright(`
-  Total_Images: ${imagesList.length}, jpg: ${jpgList.length}, png: ${pngList.length} gif: ${gifList.length}
+  Total images: ${imagesList.length}, jpg: ${jpgList.length}, png: ${pngList.length} gif: ${gifList.length}
   `))
-  
-  const controls = await inquirer.askSharpQuestions();
-  const config = {
-    size: Number(controls.size),
+
+  const whatWeDoing = await inquirer.askWhatWeDoingQuestions();
+  if(whatWeDoing.WhatWeDoing === 'Default optimizing to webp') {
+    toFormat = 'webp'
+  }
+
+  let config = {
+    quarlity: 90,
+    rotate: false,
+    trim: false,
+    jpegQuality: 90,
+    pngQuality: 90,
+    webpQuality: 90,
+    jpegProgressive: true,
+    cropFocus: 'left top',
+    width: false,
+    height: false,
     outDir: location.outputDir,
-    verbose: true
+    verbose: true,
+    pngCompressionLevel: 9,
+    // default is 4 (https://github.com/kornelski/pngquant/blob/4219956d5e080be7905b5581314d913d20896934/rust/bin.rs#L61)
+    pngCompressionSpeed: 4,
+    toFormat: toFormat,
+    useMozJpeg: false
 }
+  
+  
+
+  console.log(whatWeDoing.AreWeResizing)
+  if(whatWeDoing.AreWeResizing) {
+    const controls = await inquirer.askSharpQuestions();
+    config = {
+      quality: Number(controls.quality),
+      rotate: false,
+      trim: false,
+      jpegQuality: Number(controls.quality),
+      pngQuality: Number(controls.quality),
+      webpQuality: Number(controls.quality),
+      jpegProgressive: true,
+      cropFocus: 'left top',
+      width: Number(controls.width),
+      height: Number(controls.height),
+      outDir: location.outputDir,
+      pngCompressionLevel: 9,
+      // default is 4 (https://github.com/kornelski/pngquant/blob/4219956d5e080be7905b5581314d913d20896934/rust/bin.rs#L61)
+      pngCompressionSpeed: 4,
+      toFormat: toFormat,
+      useMozJpeg: false
+  }
+  
+}
+
+
+const verbose = await inquirer.askVerboseQuestions();
 const status = new Spinner('working...');
 files.checkIfOutDirExists(config.outDir);
 status.start();
-await Promise.all(imagesList.map(image => sharp.runSharp(config, image)))
+
+await Promise.all(imagesList.map(image => sharp.runSharp(config, image, verbose)))
 status.stop();
+console.log(chalk.blueBright(`
 
-
-console.log('all done!');
+             All done!
+             
+             Thanks for using sharp machine.
+             `));
 };
 
 run();
-
-
