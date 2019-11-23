@@ -6,7 +6,7 @@ module.exports = {
       {
         name: 'size',
         type: 'input',
-        message: 'Enter size in px',
+        message: 'Enter width in px',
         validate: function( value ) {
           if (value.length) {
             return true;

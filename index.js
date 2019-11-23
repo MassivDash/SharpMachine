@@ -1,10 +1,10 @@
 #!/usr/bin/env node
-const files = require('./files');
-const sharp = require('./sharp');
+const files = require('./libs/files');
+const sharp = require('./libs/sharp/sharp');
 const chalk = require('chalk');
 const clear = require('clear');
 const figlet = require('figlet');
-const inquirer  = require('./inquirer');
+const inquirer  = require('./libs/inquirer');
 const CLI = require('clui');
 const Spinner = CLI.Spinner;
 const lodash = require('lodash');
@@ -55,17 +55,20 @@ const run = async () => {
       )
       process.exit('No images')
   }
-  console.log(chalk.yellowBright(`Total_Images: ${imagesList.length}, jpg: ${jpgList.length}, gif: ${gifList.length}`))
+  console.log(chalk.yellowBright(`
+  Total_Images: ${imagesList.length}, jpg: ${jpgList.length}, png: ${pngList.length} gif: ${gifList.length}
+  `))
   
   const controls = await inquirer.askSharpQuestions();
   const config = {
     size: Number(controls.size),
-    outDir: location.outputDir
+    outDir: location.outputDir,
+    verbose: true
 }
 const status = new Spinner('working...');
 files.checkIfOutDirExists(config.outDir);
 status.start();
-Promise.all(imagesList.map(image => sharp.runSharp(config, image)))
+await Promise.all(imagesList.map(image => sharp.runSharp(config, image)))
 status.stop();
 
 
