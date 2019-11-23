@@ -29,7 +29,7 @@ function toArray(buf) {
 }
 
 module.exports = {
-  runSharp: async (config, file, verbose) => {
+  runSharp: async (config, file, outDir, verbose) => {
 
   let width
   let height
@@ -95,12 +95,12 @@ module.exports = {
         quality: config.webpQuality || config.quality,
         force: config.toFormat === `webp`,
       })
-      .toFile(`${config.outDir}/${nameWithfileExtension}`)
+      .toFile(`${outDir}/${nameWithfileExtension}`)
 
     
     if(verbose.verbose){
         const before = await (fs.statSync(file.path).size / 1000000.0).toFixed(3)
-        const after = await (fs.statSync(`${process.cwd()}/${config.outDir}/${nameWithfileExtension}`).size / 1000000.0).toFixed(3) 
+        const after = await (fs.statSync(`${process.cwd()}/${outDir}/${nameWithfileExtension}`).size / 1000000.0).toFixed(3) 
         console.log(chalk.blueBright(`
         new file: ${chalk.white(`${nameWithfileExtension}`)}
         size: ${chalk.white(`${after} MB`)}

@@ -60,12 +60,13 @@ const run = async () => {
   `))
 
   const whatWeDoing = await inquirer.askWhatWeDoingQuestions();
+  const resize = whatWeDoing.WhatWeDoing !== 'Custom config' && await inquirer.askResizeQuestion();
   if(whatWeDoing.WhatWeDoing === 'Default optimizing to webp') {
     toFormat = 'webp'
   }
 
   let config = {
-    quarlity: 90,
+    quality: 90,
     rotate: false,
     trim: false,
     jpegQuality: 90,
@@ -75,7 +76,6 @@ const run = async () => {
     cropFocus: 'left top',
     width: false,
     height: false,
-    outDir: location.outputDir,
     verbose: true,
     pngCompressionLevel: 9,
     // default is 4 (https://github.com/kornelski/pngquant/blob/4219956d5e080be7905b5581314d913d20896934/rust/bin.rs#L61)
@@ -86,8 +86,8 @@ const run = async () => {
   
   
 
-  console.log(whatWeDoing.AreWeResizing)
-  if(whatWeDoing.AreWeResizing) {
+  console.log(resize.AreWeResizing)
+  if(resize.AreWeResizing ) {
     const controls = await inquirer.askSharpQuestions();
     config = {
       quality: Number(controls.quality),
@@ -100,7 +100,6 @@ const run = async () => {
       cropFocus: 'left top',
       width: Number(controls.width),
       height: Number(controls.height),
-      outDir: location.outputDir,
       pngCompressionLevel: 9,
       // default is 4 (https://github.com/kornelski/pngquant/blob/4219956d5e080be7905b5581314d913d20896934/rust/bin.rs#L61)
       pngCompressionSpeed: 4,
@@ -110,13 +109,18 @@ const run = async () => {
   
 }
 
+  if(whatWeDoing.WhatWeDoing === 'Custom config') {
+  const customConfig = await inquirer.askCustomSharpQuestions();
+  config = JSON.parse(customConfig.customSharpConfig)  
+}
 
+const outDir = location.outputDir
 const verbose = await inquirer.askVerboseQuestions();
 const status = new Spinner('working...');
-files.checkIfOutDirExists(config.outDir);
+files.checkIfOutDirExists(outDir);
 status.start();
 
-await Promise.all(imagesList.map(image => sharp.runSharp(config, image, verbose)))
+await Promise.all(imagesList.map(image => sharp.runSharp(config, image, outDir, verbose)))
 status.stop();
 console.log(chalk.blueBright(`
 

@@ -1,6 +1,34 @@
 const inquirer = require('inquirer');
 
 module.exports = {
+  askCustomSharpQuestions: () => {
+    const questions = [
+      {
+        name: 'customSharpConfig',
+        type: 'editor',
+        message: 'please configure the config options',
+        default: JSON.stringify({
+          quality: 90,
+          rotate: false,
+          trim: false,
+          jpegQuality: 90,
+          pngQuality: 90,
+          webpQuality: 90,
+          jpegProgressive: true,
+          cropFocus: 'left top',
+          width: false,
+          height: false,
+          verbose: true,
+          pngCompressionLevel: 9,
+          // default is 4 (https://github.com/kornelski/pngquant/blob/4219956d5e080be7905b5581314d913d20896934/rust/bin.rs#L61)
+          pngCompressionSpeed: 4,
+          toFormat: '',
+          useMozJpeg: false
+        })
+      }
+    ];
+    return inquirer.prompt(questions);
+  },
   askSharpQuestions: () => {
     const questions = [
       {
@@ -41,14 +69,18 @@ module.exports = {
             return 'Pick sth';
           }
         }
-      },
-      {
-        name: 'AreWeResizing',
-        type: 'confirm',
-        message: 'Are we resizing images ?',
-        default: false,
-      },
+      }
     ];
+    return inquirer.prompt(questions);
+  },
+  askResizeQuestion: () => {
+    const questions = [
+    {
+      name: 'AreWeResizing',
+      type: 'confirm',
+      message: 'Are we resizing images ?',
+      default: false,
+    }];
     return inquirer.prompt(questions);
   },
   askVerboseQuestions: () => {
