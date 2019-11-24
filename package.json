@@ -1,9 +1,10 @@
 {
   "name": "sharpmachine",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "Interactive CLI for batch image sharp optimizing and resizing images",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
     "test": "echo \"Error: no test specified\""
   },
   "author": "Lukasz Celitan, Spaceghost, info@spaceout.pl",
