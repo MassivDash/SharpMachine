@@ -18,7 +18,6 @@ module.exports = {
           cropFocus: 'left top',
           width: false,
           height: false,
-          verbose: true,
           pngCompressionLevel: 9,
           // default is 4 (https://github.com/kornelski/pngquant/blob/4219956d5e080be7905b5581314d913d20896934/rust/bin.rs#L61)
           pngCompressionSpeed: 4,

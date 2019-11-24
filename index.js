@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 const files = require('./libs/files');
-const sharp = require('./libs/sharp/sharp');
+const sharp = require('./libs/sharp');
 const chalk = require('chalk');
 const clear = require('clear');
 const figlet = require('figlet');
@@ -30,10 +30,11 @@ console.log('');
 
 const run = async () => {
   
-  const regexImage = new RegExp('\.(?:jpg|gif|png)', 'g');
+  const regexImage = new RegExp('\.(?:jpg|gif|png|webp|)', 'g');
   const regexJpg = new RegExp('\.(?:jpg)', 'g');
   const regexPng = new RegExp('\.(?:png)', 'g');
-  const regexGif = new RegExp('\.(?:gif)', 'g');        
+  const regexGif = new RegExp('\.(?:gif)', 'g');
+  const regexWebp = new RegExp('\.(?:webp)', 'g');        
   const location = await inquirer.askInputQuestions(); 
     let filesList = [];
   try {
@@ -48,6 +49,7 @@ const run = async () => {
   const pngList = filesList.filter(( file ) => file.name.match(regexPng));
   const jpgList = filesList.filter(( file ) => file.name.match(regexJpg));
   const gifList = filesList.filter(( file ) => file.name.match(regexGif));
+  const webpList = filesList.filter(( file ) => file.name.match(regexWebp));
   
   if(lodash.isEmpty(imagesList)){
       console.log(
@@ -55,8 +57,8 @@ const run = async () => {
       )
       process.exit('No images')
   }
-  console.log(chalk.yellowBright(`
-  Total images: ${imagesList.length}, jpg: ${jpgList.length}, png: ${pngList.length} gif: ${gifList.length}
+  console.log(chalk.blueBright(`
+  Total images: ${chalk.white(`${imagesList.length}, jpg: ${jpgList.length}, png: ${pngList.length} gif: ${gifList.length} webp: ${webpList.length}`)}
   `))
 
   const whatWeDoing = await inquirer.askWhatWeDoingQuestions();
@@ -84,9 +86,6 @@ const run = async () => {
     useMozJpeg: false
 }
   
-  
-
-  console.log(resize.AreWeResizing)
   if(resize.AreWeResizing ) {
     const controls = await inquirer.askSharpQuestions();
     config = {

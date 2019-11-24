@@ -1,24 +1,31 @@
 {
   "name": "sharpmachine",
-  "version": "1.0.0",
-  "description": "image sharp machine for optimising images",
+  "version": "0.5.0",
+  "description": "Interactive CLI for batch image sharp optimizing and resizing images",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\""
   },
-  "author": "Lukasz Celitan",
+  "author": "Lukasz Celitan, Spaceghost, info@spaceout.pl",
   "license": "ISC",
+  "repository": "https://github.com/MassivDash/SharpMachine.git",
+  "deprecated": false,
+  "keywords": [
+    "cli",
+    "sharp",
+    "image optimization",
+    "sharp cli",
+    "resize images",
+    "node image resizer"
+  ],
   "dependencies": {
     "chalk": "^3.0.0",
     "clear": "^0.1.0",
     "clui": "^0.3.6",
-    "configstore": "^5.0.0",
     "figlet": "^1.2.4",
     "inquirer": "^7.0.0",
     "lodash": "^4.17.15",
-    "minimist": "^1.2.0",
     "sharp": "^0.23.3",
-    "touch": "^3.1.0",
     "probe-image-size": "5.0.0"
   },
   "bin": {

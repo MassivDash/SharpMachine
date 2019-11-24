@@ -1,5 +1,4 @@
 const fs = require("fs")
-const path = require('path');
 const sharp = require('sharp');
 const chalk = require('chalk');
 const imageSize = require(`probe-image-size`)
