@@ -23,15 +23,13 @@ Navigate to a folder with images and run
 sharpmachine 
 ```
 
-![Choose input and output dir](https://blog.spaceout.pl/content/images/size/w300/2019/11/sharpimage.png)
+![Choose input and output dir](https://blog.spaceout.pl//content/images/size/w300/2020/03/sharp.png)
 
 
 1. Either type folder name, or type "." for current folder (required) 
 2. Enter output folder (required)
 
 ## Commands 
-
-![Sharpmachine Coammands](https://blog.spaceout.pl/content/images/2019/11/Screenshot-from-2019-11-24-14-04-29.png)
 
 If selected folder contains images (png, jpg, gif, webp), you can : 
 
@@ -84,7 +82,7 @@ Type: ISC
 
 Author: Lukasz Celitan, "Spaceghost", https://spaceout.pl, info@spaceout.pl
 
-![Spaceghost](https://blog.spaceout.pl/content/images/2018/11/spaceghost-1.jpg)
+![Spaceghost](https://blog.spaceout.pl/content/images/2020/03/spaceghost-1.jpg)
 
 
 
