@@ -82,6 +82,34 @@ module.exports = {
     }];
     return inquirer.prompt(questions);
   },
+  askRenameQuestion: () => {
+    const questions = [
+      {
+        name: 'RenameFiles',
+        type: 'confirm',
+        message: 'Are we renaming files ?',
+        default: false
+      }
+    ];
+    return inquirer.prompt(questions);
+  },
+  askForNewName: () => {
+    const questions = [
+      {
+        name: 'fileName',
+        type: 'input',
+        message: 'New file name, (-index will be added to the file name) ?',
+        default: 'newSeoName'
+      },
+      {
+        name: 'addHash',
+        type: 'confirm',
+        message: 'Add uuid hash to name?',
+        default: false
+      }
+    ];
+    return inquirer.prompt(questions);
+  },
   askVerboseQuestions: () => {
     const questions = [
       {

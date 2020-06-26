@@ -2,9 +2,10 @@ const fs = require("fs")
 const sharp = require('sharp');
 const chalk = require('chalk');
 const imageSize = require(`probe-image-size`)
+const { v4: uuidv4 } = require('uuid');
 
-const getImageSize = file => {
-    const dimensions = imageSize.sync(
+const getImageSize = async file => {
+    const dimensions = await imageSize.sync(
       toArray(fs.readFileSync(file.path))
     )
     return dimensions
@@ -28,12 +29,11 @@ function toArray(buf) {
 }
 
 module.exports = {
-  runSharp: async (config, file, outDir, verbose) => {
-
+  runSharp: async (config, file, outDir, verbose, index) => {
   let width
   let height
   // Calculate the eventual width/height of the image.
-  const dimensions = getImageSize(file)
+  const dimensions = await getImageSize(file)
   let aspectRatio = dimensions.width / dimensions.height
 
   // If the width/height are both set, we're cropping so just return
@@ -74,6 +74,10 @@ module.exports = {
     if (config.toFormat === 'webp' || config.toFormat === 'png' || config.toFormat === 'jpg'){
       nameWithfileExtension = `${file.name.slice(0, -3)}${config.toFormat}`
     }
+
+    if(config.newName){
+      nameWithfileExtension = `${config.newName}-${index+1}${config.hashOn ? `-${uuidv4()}` : ``}${file.name.slice(file.name.length - 4)}`
+    } 
   
   
     await pipeline

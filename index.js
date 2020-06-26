@@ -30,7 +30,7 @@ console.log('');
 
 const run = async () => {
   
-  const regexImage = new RegExp('\.(?:jpg|gif|png|webp|)', 'g');
+  const regexImage = new RegExp('\.(?:jpg|gif|png|webp)', 'g');
   const regexJpg = new RegExp('\.(?:jpg)', 'g');
   const regexPng = new RegExp('\.(?:png)', 'g');
   const regexGif = new RegExp('\.(?:gif)', 'g');
@@ -63,6 +63,7 @@ const run = async () => {
 
   const whatWeDoing = await inquirer.askWhatWeDoingQuestions();
   const resize = whatWeDoing.WhatWeDoing !== 'Custom config' && await inquirer.askResizeQuestion();
+  const rename = whatWeDoing.WhatWeDoing !== 'Custom config' && await inquirer.askRenameQuestion();
   if(whatWeDoing.WhatWeDoing === 'Default optimizing to webp') {
     toFormat = 'webp'
   }
@@ -105,8 +106,13 @@ const run = async () => {
       toFormat: toFormat,
       useMozJpeg: false
   }
-  
 }
+
+if(rename.RenameFiles){
+  const newName = await inquirer.askForNewName()
+  config.newName = newName.fileName;
+  config.hashOn = newName.addHash
+} 
 
   if(whatWeDoing.WhatWeDoing === 'Custom config') {
   const customConfig = await inquirer.askCustomSharpQuestions();
@@ -119,7 +125,7 @@ const status = new Spinner('working...');
 files.checkIfOutDirExists(outDir);
 status.start();
 
-await Promise.all(imagesList.map(image => sharp.runSharp(config, image, outDir, verbose)))
+await Promise.all(imagesList.map((image, index) => sharp.runSharp(config, image, outDir, verbose, index)))
 status.stop();
 console.log(chalk.blueBright(`
 
