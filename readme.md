@@ -1,5 +1,5 @@
 # Sharp Machine
-ver. 1.0.5 by Lukasz Celitan "Spaceghost"  
+ver. 1.0.6 by Lukasz Celitan "Spaceghost"  
 https://spaceout.pl
 
 Sharp Machine is an image optimizing program cli meant to be installed globally. After execution Sharp Machine will scan for images and optimize them according to config set up via interactive cli. 
