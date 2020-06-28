@@ -1,6 +1,6 @@
 {
   "name": "sharpmachine",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Interactive CLI for batch image sharp optimizing and resizing images",
   "main": "index.js",
   "types": "./typings/index.d.ts",
