@@ -75,7 +75,7 @@ var run = function () { return __awaiter(void 0, void 0, void 0, function () {
             case 0:
                 clear_1.default();
                 console.log(chalk_1.default.blueBright(figlet_1.default.textSync('Sharp Machine', { horizontalLayout: 'full' })));
-                console.log(chalk_1.default.blueBright('Welcome to sharp machine. ver. 1.0'));
+                console.log(chalk_1.default.blueBright('Welcome to sharp machine. ver. 1.1.2'));
                 console.log(chalk_1.default.blueBright('by spaceghost, https://spaceout.pl'));
                 console.log('');
                 regexImage = new RegExp('.(?:jpg|gif|png|webp)', 'g');
