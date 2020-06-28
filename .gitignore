@@ -1,4 +1,6 @@
 node_modules
-/src
-/out
-/foto
+out
+foto
+testImages
+dist-esm
+typings
