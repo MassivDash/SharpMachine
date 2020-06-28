@@ -1,5 +1,5 @@
 # Sharp Machine
-ver. 1.0.6 by Lukasz Celitan "Spaceghost"  
+ver. 1.1.0 by Lukasz Celitan "Spaceghost"  
 https://spaceout.pl
 
 Sharp Machine is an image optimizing program cli meant to be installed globally. After execution Sharp Machine will scan for images and optimize them according to config set up via interactive cli. 
@@ -23,9 +23,10 @@ Navigate to a folder with images and run
 sharpmachine 
 ```
                                 |_|                                                         
-Welcome to sharp machine. ver. 1.0.7
+Welcome to sharp machine. ver. 1.1.0
 by spaceghost, https://spaceout.pl
 
+![SharpMachine](https://blog.spaceout.pl/content/images/size/w2000/2020/06/sharpMachine-1.png)
 
 1. Either type folder name, or type "." for current folder (required) 
 2. Enter output folder (required)
@@ -83,6 +84,3 @@ All requests are more than welcome
 Type: ISC
 
 Author: Lukasz Celitan, "Spaceghost", https://spaceout.pl, info@spaceout.pl
-
-
-
