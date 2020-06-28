@@ -26,7 +26,7 @@ const run = async (): Promise<any> => {
     ),
   );
 
-  console.log(chalk.blueBright('Welcome to sharp machine. ver. 1.1.2'));
+  console.log(chalk.blueBright('Welcome to sharp machine. ver. 1.1.3'));
 
   console.log(chalk.blueBright('by spaceghost, https://spaceout.pl'));
   console.log('');
