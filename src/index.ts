@@ -17,7 +17,7 @@ import { statSync } from 'fs';
 import figlet from 'figlet';
 import clear from 'clear';
 
- const run = async (): Promise<any> => {
+const run = async (): Promise<any> => {
   clear();
 
   console.log(
