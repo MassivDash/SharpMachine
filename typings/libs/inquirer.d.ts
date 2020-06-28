@@ -18,6 +18,7 @@ declare const inquirerLibs: {
         width: number;
         height: number;
         quality: number;
+        convert: 'no' | 'jpg' | 'png' | 'webp';
     }>;
     askVerboseQuestions: () => Promise<{
         verbose: boolean;

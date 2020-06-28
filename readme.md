@@ -65,7 +65,7 @@ edit, save and quit
 Configuration options and types can be found at: https://sharp.pixelplumbing.com/en/stable/api-operation/ 
 
 
-4. Verbose (yes/no) Shows simple statistics on executed files. (Slower)
+4. Show Stats (yes/no) Shows simple statistics on executed files. (Slower)
 
 ## Contribution 
 

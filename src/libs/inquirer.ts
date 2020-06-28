@@ -35,6 +35,7 @@ const askSharpQuestions = (): Promise<{
   width: number;
   height: number;
   quality: number;
+  convert: 'no' | 'jpg' | 'png' | 'webp';
 }> => {
   const questions = [
     {
@@ -54,6 +55,19 @@ const askSharpQuestions = (): Promise<{
       type: 'input',
       message: 'Enter quality setting ( 0 - 100): ',
       default: 80,
+    },
+    {
+      name: 'convert',
+      type: 'list',
+      message: 'Converting files to another format ?',
+      choices: ['no', 'jpg', 'png', 'webp'],
+      validate: function (value: string) {
+        if (value.length) {
+          return true;
+        } else {
+          return 'Pick sth';
+        }
+      },
     },
   ];
   return inquirer.prompt(questions);
@@ -129,8 +143,8 @@ const askVerboseQuestions = (): Promise<{ verbose: boolean }> => {
     {
       name: 'verbose',
       type: 'confirm',
-      message: 'verbose ?',
-      default: false,
+      message: 'Show stats ?',
+      default: true,
     },
   ];
   return inquirer.prompt(questions);

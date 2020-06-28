@@ -53,6 +53,20 @@ var askSharpQuestions = function () {
             message: 'Enter quality setting ( 0 - 100): ',
             default: 80,
         },
+        {
+            name: 'convert',
+            type: 'list',
+            message: 'Converting files to another format ?',
+            choices: ['no', 'jpg', 'png', 'webp'],
+            validate: function (value) {
+                if (value.length) {
+                    return true;
+                }
+                else {
+                    return 'Pick sth';
+                }
+            },
+        },
     ];
     return inquirer_1.default.prompt(questions);
 };
@@ -123,8 +137,8 @@ var askVerboseQuestions = function () {
         {
             name: 'verbose',
             type: 'confirm',
-            message: 'verbose ?',
-            default: false,
+            message: 'Show stats ?',
+            default: true,
         },
     ];
     return inquirer_1.default.prompt(questions);

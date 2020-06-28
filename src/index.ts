@@ -131,7 +131,7 @@ const run = async (): Promise<any> => {
       pngCompressionLevel: 9,
       // default is 4 (https://github.com/kornelski/pngquant/blob/4219956d5e080be7905b5581314d913d20896934/rust/bin.rs#L61)
       pngCompressionSpeed: 4,
-      toFormat: toFormat,
+      toFormat: controls.convert === 'no' ? toFormat : controls.convert,
       useMozJpeg: false,
     };
   }
