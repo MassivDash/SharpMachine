@@ -41,6 +41,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.runSharp = void 0;
 var fs_1 = __importDefault(require("fs"));
+var path_1 = __importDefault(require("path"));
 var sharp_1 = __importDefault(require("sharp"));
 var chalk_1 = __importDefault(require("chalk"));
 var uuid_1 = require("uuid");
@@ -95,7 +96,12 @@ exports.runSharp = function (config, file, outDir, verbose, index) { return __aw
                     config.toFormat === 'png' ||
                     config.toFormat === 'jpg';
                 if (changeFileExtension) {
-                    nameWithfileExtension = "" + (file === null || file === void 0 ? void 0 : file.name.slice(0, -3)) + config.toFormat;
+                    if ((file === null || file === void 0 ? void 0 : file.name.slice(0, -3)) === 'web') {
+                        nameWithfileExtension = "" + (file === null || file === void 0 ? void 0 : file.name.slice(0, -4)) + config.toFormat;
+                    }
+                    else {
+                        nameWithfileExtension = "" + (file === null || file === void 0 ? void 0 : file.name.slice(0, -3)) + config.toFormat;
+                    }
                 }
                 if (config.newName) {
                     nameWithfileExtension = config.newName + "-" + (index + 1) + (config.hashOn ? "-" + uuid_1.v4() : "") + "." + (changeFileExtension
@@ -108,7 +114,7 @@ exports.runSharp = function (config, file, outDir, verbose, index) { return __aw
                     })
                         .png({
                         compressionLevel: config.pngCompressionLevel,
-                        adaptiveFiltering: false,
+                        adaptiveFiltering: true,
                         force: config.toFormat === "png",
                     })
                         .jpeg({
@@ -120,15 +126,15 @@ exports.runSharp = function (config, file, outDir, verbose, index) { return __aw
                         quality: config.webpQuality || config.quality,
                         force: config.toFormat === "webp",
                     })
-                        .toFile(outDir + "/" + nameWithfileExtension)];
+                        .toFile(path_1.default.join(process.cwd(), outDir, '/', nameWithfileExtension))];
             case 2:
                 _a.sent();
                 if (!verbose) return [3 /*break*/, 5];
                 return [4 /*yield*/, (fs_1.default.statSync(file.path).size / 1000000.0).toFixed(3)];
             case 3:
                 before = _a.sent();
-                return [4 /*yield*/, (fs_1.default.statSync(process.cwd() + "/" + outDir + "/" + nameWithfileExtension).size /
-                        1000000.0).toFixed(3)];
+                return [4 /*yield*/, (fs_1.default.statSync(path_1.default.join(process.cwd(), '/', outDir, nameWithfileExtension))
+                        .size / 1000000.0).toFixed(3)];
             case 4:
                 after = _a.sent();
                 ArrayBar = chalk_1.default.green('||||||||||||||||||||');

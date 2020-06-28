@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 import { Config, InputFile, Dimensions } from './types';
 import fs from 'fs';
+import path from 'path';
 import sharp from 'sharp';
 import chalk from 'chalk';
 import { v4 as uuidv4 } from 'uuid';
@@ -68,7 +69,11 @@ export const runSharp = async (
     config.toFormat === 'jpg';
 
   if (changeFileExtension) {
-    nameWithfileExtension = `${file?.name.slice(0, -3)}${config.toFormat}`;
+    if (file?.name.slice(0, -3) === 'web') {
+      nameWithfileExtension = `${file?.name.slice(0, -4)}${config.toFormat}`;
+    } else {
+      nameWithfileExtension = `${file?.name.slice(0, -3)}${config.toFormat}`;
+    }
   }
 
   if (config.newName) {
@@ -87,7 +92,7 @@ export const runSharp = async (
     })
     .png({
       compressionLevel: config.pngCompressionLevel,
-      adaptiveFiltering: false,
+      adaptiveFiltering: true,
       force: config.toFormat === `png`,
     })
     .jpeg({
@@ -99,13 +104,13 @@ export const runSharp = async (
       quality: config.webpQuality || config.quality,
       force: config.toFormat === `webp`,
     })
-    .toFile(`${outDir}/${nameWithfileExtension}`);
+    .toFile(path.join(process.cwd(), outDir, '/', nameWithfileExtension));
 
   if (verbose) {
     const before = await (fs.statSync(file.path).size / 1000000.0).toFixed(3);
     const after = await (
-      fs.statSync(`${process.cwd()}/${outDir}/${nameWithfileExtension}`).size /
-      1000000.0
+      fs.statSync(path.join(process.cwd(), '/', outDir, nameWithfileExtension))
+        .size / 1000000.0
     ).toFixed(3);
 
     let ArrayBar = chalk.green('||||||||||||||||||||');
