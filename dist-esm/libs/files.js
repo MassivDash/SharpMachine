@@ -47,7 +47,7 @@ var mkdirp_1 = __importDefault(require("mkdirp"));
 var probe_image_size_1 = __importDefault(require("probe-image-size"));
 var chalk_1 = __importDefault(require("chalk"));
 exports.getCurrentFiles = function (dir) {
-    var absoluteDir = process.cwd() + "/" + dir;
+    var absoluteDir = "" + path_1.default.join(process.cwd(), '/', dir);
     return fs_1.default
         .readdirSync(absoluteDir)
         .reduce(function (list, name) {
@@ -57,7 +57,7 @@ exports.getCurrentFiles = function (dir) {
     }, []);
 };
 exports.getDirectories = function () {
-    var absoluteDir = process.cwd() + "/";
+    var absoluteDir = "" + path_1.default.join(process.cwd(), '/');
     return fs_1.default
         .readdirSync(absoluteDir, { withFileTypes: true })
         .filter(function (dirent) { return dirent.isDirectory(); })

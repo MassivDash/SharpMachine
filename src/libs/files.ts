@@ -7,7 +7,7 @@ import chalk from 'chalk';
 import { InputFile, Dimensions } from './types';
 
 export const getCurrentFiles = (dir: string): InputFile[] => {
-  const absoluteDir = `${process.cwd()}/${dir}`;
+  const absoluteDir = `${path.join(process.cwd(), '/', dir)}`;
   return fs
     .readdirSync(absoluteDir)
     .reduce((list: InputFile[], name: string) => {
@@ -18,7 +18,7 @@ export const getCurrentFiles = (dir: string): InputFile[] => {
 };
 
 export const getDirectories = (): string[] => {
-  const absoluteDir = `${process.cwd()}/`;
+  const absoluteDir = `${path.join(process.cwd(), '/')}`;
   return fs
     .readdirSync(absoluteDir, { withFileTypes: true })
     .filter((dirent) => dirent.isDirectory())
