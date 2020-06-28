@@ -1,1 +1,3 @@
-require('./dist-esm/index');
+var cli = require('./dist-esm/index');
+
+cli.default();

@@ -68,16 +68,16 @@ var chalk_1 = __importDefault(require("chalk"));
 var fs_1 = require("fs");
 var figlet_1 = __importDefault(require("figlet"));
 var clear_1 = __importDefault(require("clear"));
-clear_1.default();
-console.log(chalk_1.default.blueBright(figlet_1.default.textSync('Sharp Machine', { horizontalLayout: 'full' })));
-console.log(chalk_1.default.blueBright('Welcome to sharp machine. ver. 1.0'));
-console.log(chalk_1.default.blueBright('by spaceghost, https://spaceout.pl'));
-console.log('');
 var run = function () { return __awaiter(void 0, void 0, void 0, function () {
     var regexImage, regexJpg, regexPng, regexGif, regexWebp, location, filesList, e_1, toFormat, imagesList, pngList, jpgList, gifList, webpList, imagesListWitfhInfo, whatWeDoing, resize, rename, config, controls, newName, customConfig, outDir, verbose, status;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
+                clear_1.default();
+                console.log(chalk_1.default.blueBright(figlet_1.default.textSync('Sharp Machine', { horizontalLayout: 'full' })));
+                console.log(chalk_1.default.blueBright('Welcome to sharp machine. ver. 1.0'));
+                console.log(chalk_1.default.blueBright('by spaceghost, https://spaceout.pl'));
+                console.log('');
                 regexImage = new RegExp('.(?:jpg|gif|png|webp)', 'g');
                 regexJpg = new RegExp('.(?:jpg)', 'g');
                 regexPng = new RegExp('.(?:png)', 'g');
@@ -223,5 +223,5 @@ var run = function () { return __awaiter(void 0, void 0, void 0, function () {
         }
     });
 }); };
-run();
+exports.default = run;
 //# sourceMappingURL=index.js.map

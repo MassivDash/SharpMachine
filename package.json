@@ -2,10 +2,10 @@
   "name": "sharpmachine",
   "version": "1.0.7",
   "description": "Interactive CLI for batch image sharp optimizing and resizing images",
-  "main": "./dist-esm/index.js",
+  "main": "index.js",
   "types": "./typings/index.d.ts",
   "scripts": {
-    "start": "node ./dist-esm/index.js",
+    "start": "node index.js",
     "build": "tsc -p tsconfig.json",
     "test": "echo \"Error: no test specified\"",
     "lint": "eslint . --ext .ts --fix"

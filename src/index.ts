@@ -16,20 +16,20 @@ import chalk from 'chalk';
 import { statSync } from 'fs';
 import figlet from 'figlet';
 import clear from 'clear';
-clear();
 
-console.log(
-  chalk.blueBright(
-    figlet.textSync('Sharp Machine', { horizontalLayout: 'full' }),
-  ),
-);
+ const run = async (): Promise<any> => {
+  clear();
 
-console.log(chalk.blueBright('Welcome to sharp machine. ver. 1.0'));
+  console.log(
+    chalk.blueBright(
+      figlet.textSync('Sharp Machine', { horizontalLayout: 'full' }),
+    ),
+  );
 
-console.log(chalk.blueBright('by spaceghost, https://spaceout.pl'));
-console.log('');
+  console.log(chalk.blueBright('Welcome to sharp machine. ver. 1.0'));
 
-const run = async () => {
+  console.log(chalk.blueBright('by spaceghost, https://spaceout.pl'));
+  console.log('');
   const regexImage = new RegExp('.(?:jpg|gif|png|webp)', 'g');
   const regexJpg = new RegExp('.(?:jpg)', 'g');
   const regexPng = new RegExp('.(?:png)', 'g');
@@ -169,4 +169,4 @@ const run = async () => {
   console.log(chalk.white(`Thanks for using sharpmachine`));
 };
 
-run();
+export default run;
