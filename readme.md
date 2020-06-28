@@ -1,5 +1,5 @@
 # Sharp Machine
-ver. 0.5.1 by Lukasz Celitan "Spaceghost"  
+ver. 1.0.5 by Lukasz Celitan "Spaceghost"  
 https://spaceout.pl
 
 Sharp Machine is an image optimizing program cli meant to be installed globally. After execution Sharp Machine will scan for images and optimize them according to config set up via interactive cli. 
@@ -23,7 +23,14 @@ Navigate to a folder with images and run
 sharpmachine 
 ```
 
-![Choose input and output dir](https://blog.spaceout.pl//content/images/size/w300/2020/03/sharp.png)
+  ____    _                                __  __                  _       _                
+ / ___|  | |__     __ _   _ __   _ __     |  \/  |   __ _    ___  | |__   (_)  _ __     ___ 
+ \___ \  | '_ \   / _` | | '__| | '_ \    | |\/| |  / _` |  / __| | '_ \  | | | '_ \   / _ \
+  ___) | | | | | | (_| | | |    | |_) |   | |  | | | (_| | | (__  | | | | | | | | | | |  __/
+ |____/  |_| |_|  \__,_| |_|    | .__/    |_|  |_|  \__,_|  \___| |_| |_| |_| |_| |_|  \___|
+                                |_|                                                         
+Welcome to sharp machine. ver. 1.0
+by spaceghost, https://spaceout.pl
 
 
 1. Either type folder name, or type "." for current folder (required) 
@@ -75,14 +82,13 @@ All requests are more than welcome
 ## ToDo
 
 * Select files from the list
-* Improve folder and file stats
+* Improve progress bars
+* Improve verbose statistics 
 
 ## License: 
 Type: ISC
 
 Author: Lukasz Celitan, "Spaceghost", https://spaceout.pl, info@spaceout.pl
-
-![Spaceghost](https://blog.spaceout.pl/content/images/2020/03/spaceghost-1.jpg)
 
 
 
