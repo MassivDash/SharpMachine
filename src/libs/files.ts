@@ -53,8 +53,12 @@ export const toArray = (buf: Buffer): Buffer[] => {
 };
 
 export const getImageSize = async (file: InputFile): Promise<Dimensions> => {
-  const dimensions = await imageSize.sync(
-    toArray(fs.readFileSync(file.path || '')),
-  );
-  return dimensions;
+  try {
+    const dimensions = await imageSize.sync(
+      toArray(fs.readFileSync(file.path || '')),
+    );
+    return dimensions;
+  } catch (e) {
+    throw new Error(`Error at file ${file.path}: ${e}`);
+  }
 };
