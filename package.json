@@ -27,12 +27,12 @@
     "chalk": "^4.1.0",
     "clear": "^0.1.0",
     "clui": "^0.3.6",
-    "figlet": "^1.4.0",
-    "inquirer": "^7.2.0",
-    "lodash": "^4.17.15",
-    "probe-image-size": "^5.0.0",
-    "sharp": "^0.25.4",
-    "uuid": "^8.2.0"
+    "figlet": "^1.5.0",
+    "inquirer": "^7.3.3",
+    "lodash": "^4.17.20",
+    "probe-image-size": "^6.0.0",
+    "sharp": "^0.26.2",
+    "uuid": "^8.3.1"
   },
   "bin": {
     "sharpmachine": "./index.js"
@@ -49,13 +49,13 @@
     "@types/uuid": "^8.0.0",
     "@typescript-eslint/eslint-plugin": "^3.4.0",
     "@typescript-eslint/parser": "^3.4.0",
-    "eslint": "^7.3.1",
-    "eslint-config-prettier": "^6.11.0",
+    "eslint": "^7.13.0",
+    "eslint-config-prettier": "^6.15.0",
     "eslint-plugin-prettier": "^3.1.4",
-    "husky": "^4.2.5",
-    "lint-staged": "^10.2.11",
-    "prettier": "^2.0.5",
-    "typescript": "^3.9.5"
+    "husky": "^4.3.0",
+    "lint-staged": "^10.5.1",
+    "prettier": "^2.1.2",
+    "typescript": "^4.0.5"
   },
   "husky": {
     "hooks": {
