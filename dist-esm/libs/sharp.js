@@ -51,7 +51,7 @@ var getPercentageChange = function (oldNumber, newNumber) {
     return ((decreaseValue / Number(oldNumber)) * 100).toFixed(2);
 };
 exports.runSharp = function (config, file, outDir, verbose, index) { return __awaiter(void 0, void 0, void 0, function () {
-    var width, height, dimensions, aspectRatio, pipeline, nameWithfileExtension, changeFileExtension, before, after, ArrayBar, extraBar, text, changeInSize, howManyBars, lineArray, howManyGreen, howManyGray;
+    var width, height, dimensions, aspectRatio, pipeline, nameWithfileExtension, changeFileExtension, before, after, ArrayBar, extraBar, text, changeInSize, howManyBars, lineArray, howManyGreen, howManyGray, e_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0: return [4 /*yield*/, files_1.getImageSize(file)];
@@ -160,8 +160,14 @@ exports.runSharp = function (config, file, outDir, verbose, index) { return __aw
                 }
                 console.log(chalk_1.default.blueBright("\n        new file: " + chalk_1.default.white("" + nameWithfileExtension) + "\n        original size: " + chalk_1.default.white(before + " MB") + "  \n        new size: " + chalk_1.default.white(after + " MB") + "\n        " + ArrayBar + extraBar + " " + text + "\n\n        resolution before: " + chalk_1.default.white(dimensions.width + " px, " + dimensions.height + " px") + ",\n        resolution after: " + chalk_1.default.white(width + " px, " + height + " px")));
                 _a.label = 5;
-            case 5: return [4 /*yield*/, pipeline];
+            case 5:
+                _a.trys.push([5, 7, , 8]);
+                return [4 /*yield*/, pipeline];
             case 6: return [2 /*return*/, _a.sent()];
+            case 7:
+                e_1 = _a.sent();
+                throw new Error("Pipeline error: " + e_1);
+            case 8: return [2 /*return*/];
         }
     });
 }); };

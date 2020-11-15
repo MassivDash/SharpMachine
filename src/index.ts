@@ -26,7 +26,7 @@ const run = async (): Promise<any> => {
     ),
   );
 
-  console.log(chalk.blueBright('Welcome to sharp machine. ver. 1.2.4'));
+  console.log(chalk.blueBright('Welcome to sharp machine. ver. 1.2.5'));
 
   console.log(chalk.blueBright('by spaceghost, https://spaceout.pl'));
   console.log('');
@@ -45,8 +45,7 @@ const run = async (): Promise<any> => {
   try {
     filesList = await getCurrentFiles(location.inputDir);
   } catch (e) {
-    console.log(e);
-    process.exit();
+    throw new Error(`Error at the input location: ${e}`);
   }
 
   let toFormat;
@@ -70,21 +69,27 @@ const run = async (): Promise<any> => {
   `),
   );
 
-  const imagesListWitfhInfo = await Promise.all(
-    imagesList.map(async (item: InputFile) => {
-      try {
-        const dimenstions: Dimensions = await getImageSize(item);
-        return {
-          absolutePath: item.path,
-          name: item.name,
-          dimensions: `${dimenstions.width}px x ${dimenstions.height}px`,
-          size: `${(statSync(item.path).size / 1000000.0).toFixed(3)}mb`,
-        };
-      } catch (e) {
-        throw new Error(`Error at file ${item.path}: ${e}`);
-      }
-    }),
-  );
+  let imagesListWitfhInfo;
+
+  try {
+    imagesListWitfhInfo = await Promise.all(
+      imagesList.map(async (item: InputFile) => {
+        try {
+          const dimenstions: Dimensions = await getImageSize(item);
+          return {
+            absolutePath: item.path,
+            name: item.name,
+            dimensions: `${dimenstions.width}px x ${dimenstions.height}px`,
+            size: `${(statSync(item.path).size / 1000000.0).toFixed(3)}mb`,
+          };
+        } catch (e) {
+          throw new Error(`Error at file ${item.path}: ${e}`);
+        }
+      }),
+    );
+  } catch (e) {
+    throw new Error(`List of images caught error: ${e}`);
+  }
 
   console.table(imagesListWitfhInfo);
 

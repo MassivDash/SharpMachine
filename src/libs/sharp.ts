@@ -153,5 +153,9 @@ export const runSharp = async (
     );
   }
 
-  return await pipeline;
+  try {
+    return await pipeline;
+  } catch (e) {
+    throw new Error(`Pipeline error: ${e}`);
+  }
 };

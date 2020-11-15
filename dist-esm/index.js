@@ -69,13 +69,13 @@ var fs_1 = require("fs");
 var figlet_1 = __importDefault(require("figlet"));
 var clear_1 = __importDefault(require("clear"));
 var run = function () { return __awaiter(void 0, void 0, void 0, function () {
-    var regexImage, regexJpg, regexPng, regexGif, regexWebp, regexWatermark, location, filesList, e_1, toFormat, imagesList, pngList, jpgList, gifList, webpList, imagesListWitfhInfo, whatWeDoing, resize, rename, config, controls, newName, customConfig, watermark, watermarkPersent, outDir, verbose, status;
+    var regexImage, regexJpg, regexPng, regexGif, regexWebp, regexWatermark, location, filesList, e_1, toFormat, imagesList, pngList, jpgList, gifList, webpList, imagesListWitfhInfo, e_2, whatWeDoing, resize, rename, config, controls, newName, customConfig, watermark, watermarkPersent, outDir, verbose, status;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
                 clear_1.default();
                 console.log(chalk_1.default.blueBright(figlet_1.default.textSync('Sharp Machine', { horizontalLayout: 'full' })));
-                console.log(chalk_1.default.blueBright('Welcome to sharp machine. ver. 1.2.4'));
+                console.log(chalk_1.default.blueBright('Welcome to sharp machine. ver. 1.2.5'));
                 console.log(chalk_1.default.blueBright('by spaceghost, https://spaceout.pl'));
                 console.log('');
                 regexImage = new RegExp('.(?:jpg|gif|png|webp)', 'g');
@@ -98,9 +98,7 @@ var run = function () { return __awaiter(void 0, void 0, void 0, function () {
                 return [3 /*break*/, 5];
             case 4:
                 e_1 = _a.sent();
-                console.log(e_1);
-                process.exit();
-                return [3 /*break*/, 5];
+                throw new Error("Error at the input location: " + e_1);
             case 5:
                 imagesList = filesList
                     .filter(function (file) { return file.name.match(regexImage); })
@@ -114,8 +112,11 @@ var run = function () { return __awaiter(void 0, void 0, void 0, function () {
                     process.exit();
                 }
                 console.log(chalk_1.default.blueBright("\n  Total images: " + chalk_1.default.white(imagesList.length + ", jpg: " + jpgList.length + ", png: " + pngList.length + " gif: " + gifList.length + " webp: " + webpList.length) + "\n  "));
+                _a.label = 6;
+            case 6:
+                _a.trys.push([6, 8, , 9]);
                 return [4 /*yield*/, Promise.all(imagesList.map(function (item) { return __awaiter(void 0, void 0, void 0, function () {
-                        var dimenstions, e_2;
+                        var dimenstions, e_3;
                         return __generator(this, function (_a) {
                             switch (_a.label) {
                                 case 0:
@@ -130,28 +131,33 @@ var run = function () { return __awaiter(void 0, void 0, void 0, function () {
                                             size: (fs_1.statSync(item.path).size / 1000000.0).toFixed(3) + "mb",
                                         }];
                                 case 2:
-                                    e_2 = _a.sent();
-                                    throw new Error("Error at file " + item.path + ": " + e_2);
+                                    e_3 = _a.sent();
+                                    throw new Error("Error at file " + item.path + ": " + e_3);
                                 case 3: return [2 /*return*/];
                             }
                         });
                     }); }))];
-            case 6:
+            case 7:
                 imagesListWitfhInfo = _a.sent();
+                return [3 /*break*/, 9];
+            case 8:
+                e_2 = _a.sent();
+                throw new Error("List of images caught error: " + e_2);
+            case 9:
                 console.table(imagesListWitfhInfo);
                 return [4 /*yield*/, inquirer_1.default.askWhatWeDoingQuestions()];
-            case 7:
+            case 10:
                 whatWeDoing = _a.sent();
                 console.log(whatWeDoing);
-                if (!(whatWeDoing.WhatWeDoing !== 'Custom config')) return [3 /*break*/, 10];
+                if (!(whatWeDoing.WhatWeDoing !== 'Custom config')) return [3 /*break*/, 13];
                 return [4 /*yield*/, inquirer_1.default.askResizeQuestion()];
-            case 8:
+            case 11:
                 resize = _a.sent();
                 return [4 /*yield*/, inquirer_1.default.askRenameQuestion()];
-            case 9:
+            case 12:
                 rename = _a.sent();
-                _a.label = 10;
-            case 10:
+                _a.label = 13;
+            case 13:
                 if (whatWeDoing.WhatWeDoing === 'Default optimizing to webp') {
                     toFormat = 'webp';
                 }
@@ -173,9 +179,9 @@ var run = function () { return __awaiter(void 0, void 0, void 0, function () {
                     toFormat: toFormat,
                     useMozJpeg: false,
                 };
-                if (!(resize === null || resize === void 0 ? void 0 : resize.AreWeResizing)) return [3 /*break*/, 12];
+                if (!(resize === null || resize === void 0 ? void 0 : resize.AreWeResizing)) return [3 /*break*/, 15];
                 return [4 /*yield*/, inquirer_1.default.askSharpQuestions()];
-            case 11:
+            case 14:
                 controls = _a.sent();
                 config = {
                     quality: Number(controls.quality),
@@ -194,24 +200,24 @@ var run = function () { return __awaiter(void 0, void 0, void 0, function () {
                     toFormat: controls.convert === 'no' ? toFormat : controls.convert,
                     useMozJpeg: false,
                 };
-                _a.label = 12;
-            case 12:
-                if (!(rename === null || rename === void 0 ? void 0 : rename.RenameFiles)) return [3 /*break*/, 14];
+                _a.label = 15;
+            case 15:
+                if (!(rename === null || rename === void 0 ? void 0 : rename.RenameFiles)) return [3 /*break*/, 17];
                 return [4 /*yield*/, inquirer_1.default.askForNewName()];
-            case 13:
+            case 16:
                 newName = _a.sent();
                 config.newName = newName.fileName;
                 config.hashOn = newName.addHash;
-                _a.label = 14;
-            case 14:
-                if (!(whatWeDoing.WhatWeDoing === 'Custom config')) return [3 /*break*/, 16];
+                _a.label = 17;
+            case 17:
+                if (!(whatWeDoing.WhatWeDoing === 'Custom config')) return [3 /*break*/, 19];
                 return [4 /*yield*/, inquirer_1.default.askCustomSharpQuestions()];
-            case 15:
+            case 18:
                 customConfig = _a.sent();
                 config = JSON.parse(customConfig.customSharpConfig);
-                _a.label = 16;
-            case 16: return [4 /*yield*/, inquirer_1.default.askWatermarkQuestion()];
-            case 17:
+                _a.label = 19;
+            case 19: return [4 /*yield*/, inquirer_1.default.askWatermarkQuestion()];
+            case 20:
                 watermark = _a.sent();
                 if (watermark === null || watermark === void 0 ? void 0 : watermark.watermark) {
                     watermarkPersent = filesList.filter(function (file) {
@@ -225,7 +231,7 @@ var run = function () { return __awaiter(void 0, void 0, void 0, function () {
                 }
                 outDir = location.outputDir;
                 return [4 /*yield*/, inquirer_1.default.askVerboseQuestions()];
-            case 18:
+            case 21:
                 verbose = _a.sent();
                 status = new clui_1.Spinner('working...');
                 files_1.checkIfOutDirExists(outDir);
@@ -233,7 +239,7 @@ var run = function () { return __awaiter(void 0, void 0, void 0, function () {
                 return [4 /*yield*/, Promise.all(imagesList.map(function (image, index) {
                         return sharp_1.runSharp(config, image, outDir, verbose.verbose, index);
                     }))];
-            case 19:
+            case 22:
                 _a.sent();
                 !verbose.verbose && status.stop();
                 console.log(chalk_1.default.blueBright(figlet_1.default.textSync('All Done!', {
