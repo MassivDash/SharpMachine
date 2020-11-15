@@ -75,7 +75,7 @@ var run = function () { return __awaiter(void 0, void 0, void 0, function () {
             case 0:
                 clear_1.default();
                 console.log(chalk_1.default.blueBright(figlet_1.default.textSync('Sharp Machine', { horizontalLayout: 'full' })));
-                console.log(chalk_1.default.blueBright('Welcome to sharp machine. ver. 1.2.2'));
+                console.log(chalk_1.default.blueBright('Welcome to sharp machine. ver. 1.2.4'));
                 console.log(chalk_1.default.blueBright('by spaceghost, https://spaceout.pl'));
                 console.log('');
                 regexImage = new RegExp('.(?:jpg|gif|png|webp)', 'g');
@@ -115,10 +115,12 @@ var run = function () { return __awaiter(void 0, void 0, void 0, function () {
                 }
                 console.log(chalk_1.default.blueBright("\n  Total images: " + chalk_1.default.white(imagesList.length + ", jpg: " + jpgList.length + ", png: " + pngList.length + " gif: " + gifList.length + " webp: " + webpList.length) + "\n  "));
                 return [4 /*yield*/, Promise.all(imagesList.map(function (item) { return __awaiter(void 0, void 0, void 0, function () {
-                        var dimenstions;
+                        var dimenstions, e_2;
                         return __generator(this, function (_a) {
                             switch (_a.label) {
-                                case 0: return [4 /*yield*/, files_1.getImageSize(item)];
+                                case 0:
+                                    _a.trys.push([0, 2, , 3]);
+                                    return [4 /*yield*/, files_1.getImageSize(item)];
                                 case 1:
                                     dimenstions = _a.sent();
                                     return [2 /*return*/, {
@@ -127,6 +129,10 @@ var run = function () { return __awaiter(void 0, void 0, void 0, function () {
                                             dimensions: dimenstions.width + "px x " + dimenstions.height + "px",
                                             size: (fs_1.statSync(item.path).size / 1000000.0).toFixed(3) + "mb",
                                         }];
+                                case 2:
+                                    e_2 = _a.sent();
+                                    throw new Error("Error at file " + item.path + ": " + e_2);
+                                case 3: return [2 /*return*/];
                             }
                         });
                     }); }))];
