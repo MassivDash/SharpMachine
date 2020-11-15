@@ -84,13 +84,19 @@ exports.toArray = function (buf) {
     return arr;
 };
 exports.getImageSize = function (file) { return __awaiter(void 0, void 0, void 0, function () {
-    var dimensions;
+    var dimensions, e_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, probe_image_size_1.default.sync(exports.toArray(fs_1.default.readFileSync(file.path || '')))];
+            case 0:
+                _a.trys.push([0, 2, , 3]);
+                return [4 /*yield*/, probe_image_size_1.default.sync(exports.toArray(fs_1.default.readFileSync(file.path || '')))];
             case 1:
                 dimensions = _a.sent();
                 return [2 /*return*/, dimensions];
+            case 2:
+                e_1 = _a.sent();
+                throw new Error("Error at file " + file.path + ": " + e_1);
+            case 3: return [2 /*return*/];
         }
     });
 }); };
