@@ -17,6 +17,8 @@ export interface Config {
     reName?: boolean;
     newName?: string;
     hashOn?: boolean;
+    watermark?: boolean;
+    watermarkFile?: string;
 }
 export interface InputFile {
     path: string;

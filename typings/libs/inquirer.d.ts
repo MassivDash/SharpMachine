@@ -26,6 +26,9 @@ declare const inquirerLibs: {
     askWhatWeDoingQuestions: () => Promise<{
         WhatWeDoing: string;
     }>;
+    askWatermarkQuestion: () => Promise<{
+        watermark: boolean;
+    }>;
 };
 export default inquirerLibs;
 //# sourceMappingURL=inquirer.d.ts.map

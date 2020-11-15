@@ -86,6 +86,10 @@ export const runSharp = async (
     }`;
   }
 
+  if (config.watermark) {
+    pipeline.composite([{ input: config.watermarkFile, gravity: 'southeast' }]);
+  }
+
   await pipeline
     .resize(width, height, {
       position: config.cropFocus,

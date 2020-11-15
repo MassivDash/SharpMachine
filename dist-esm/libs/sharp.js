@@ -108,6 +108,9 @@ exports.runSharp = function (config, file, outDir, verbose, index) { return __aw
                         ? config.toFormat
                         : file.name.slice(file.name.length - 3));
                 }
+                if (config.watermark) {
+                    pipeline.composite([{ input: config.watermarkFile, gravity: 'southeast' }]);
+                }
                 return [4 /*yield*/, pipeline
                         .resize(width, height, {
                         position: config.cropFocus,

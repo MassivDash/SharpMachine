@@ -183,6 +183,19 @@ const askInputQuestions = (): Promise<{
   return inquirer.prompt(questions);
 };
 
+const askWatermarkQuestion = (): Promise<{ watermark: boolean }> => {
+  const questions = [
+    {
+      name: 'watermark',
+      type: 'confirm',
+      message:
+        'Watermark ? Please place watermark.png file in the photos folder',
+      default: true,
+    },
+  ];
+  return inquirer.prompt(questions);
+};
+
 const inquirerLibs = {
   askCustomSharpQuestions,
   askForNewName,
@@ -192,6 +205,7 @@ const inquirerLibs = {
   askSharpQuestions,
   askVerboseQuestions,
   askWhatWeDoingQuestions,
+  askWatermarkQuestion,
 };
 
 export default inquirerLibs;

@@ -174,6 +174,17 @@ var askInputQuestions = function () {
     ];
     return inquirer_1.default.prompt(questions);
 };
+var askWatermarkQuestion = function () {
+    var questions = [
+        {
+            name: 'watermark',
+            type: 'confirm',
+            message: 'Watermark ? Please place watermark.png file in the photos folder',
+            default: true,
+        },
+    ];
+    return inquirer_1.default.prompt(questions);
+};
 var inquirerLibs = {
     askCustomSharpQuestions: askCustomSharpQuestions,
     askForNewName: askForNewName,
@@ -183,6 +194,7 @@ var inquirerLibs = {
     askSharpQuestions: askSharpQuestions,
     askVerboseQuestions: askVerboseQuestions,
     askWhatWeDoingQuestions: askWhatWeDoingQuestions,
+    askWatermarkQuestion: askWatermarkQuestion,
 };
 exports.default = inquirerLibs;
 //# sourceMappingURL=inquirer.js.map

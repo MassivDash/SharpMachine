@@ -35,6 +35,7 @@ const run = async (): Promise<any> => {
   const regexPng = new RegExp('.(?:png)', 'g');
   const regexGif = new RegExp('.(?:gif)', 'g');
   const regexWebp = new RegExp('.(?:webp)', 'g');
+  const regexWatermark = new RegExp('watermark.png', 'g');
   const location = await inquirerLibs.askInputQuestions();
 
   checkIfInputDirExists(location.inputDir);
@@ -49,7 +50,9 @@ const run = async (): Promise<any> => {
   }
 
   let toFormat;
-  const imagesList = filesList.filter((file) => file.name.match(regexImage));
+  const imagesList = filesList
+    .filter((file) => file.name.match(regexImage))
+    .filter((file) => file.name !== 'watermark.png');
   const pngList = filesList.filter((file) => file.name.match(regexPng));
   const jpgList = filesList.filter((file) => file.name.match(regexJpg));
   const gifList = filesList.filter((file) => file.name.match(regexGif));
@@ -145,6 +148,21 @@ const run = async (): Promise<any> => {
   if (whatWeDoing.WhatWeDoing === 'Custom config') {
     const customConfig = await inquirerLibs.askCustomSharpQuestions();
     config = JSON.parse(customConfig.customSharpConfig);
+  }
+
+  const watermark = await inquirerLibs.askWatermarkQuestion();
+
+  if (watermark?.watermark) {
+    const watermarkPersent = filesList.filter((file) =>
+      file.name.match(regexWatermark),
+    );
+
+    if (lodash.isEmpty(watermarkPersent)) {
+      throw new Error('No watermark file found');
+    }
+
+    config.watermark = true;
+    config.watermarkFile = watermarkPersent[0].path;
   }
 
   const outDir = location.outputDir;

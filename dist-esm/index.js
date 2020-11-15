@@ -69,13 +69,13 @@ var fs_1 = require("fs");
 var figlet_1 = __importDefault(require("figlet"));
 var clear_1 = __importDefault(require("clear"));
 var run = function () { return __awaiter(void 0, void 0, void 0, function () {
-    var regexImage, regexJpg, regexPng, regexGif, regexWebp, location, filesList, e_1, toFormat, imagesList, pngList, jpgList, gifList, webpList, imagesListWitfhInfo, whatWeDoing, resize, rename, config, controls, newName, customConfig, outDir, verbose, status;
+    var regexImage, regexJpg, regexPng, regexGif, regexWebp, regexWatermark, location, filesList, e_1, toFormat, imagesList, pngList, jpgList, gifList, webpList, imagesListWitfhInfo, whatWeDoing, resize, rename, config, controls, newName, customConfig, watermark, watermarkPersent, outDir, verbose, status;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
                 clear_1.default();
                 console.log(chalk_1.default.blueBright(figlet_1.default.textSync('Sharp Machine', { horizontalLayout: 'full' })));
-                console.log(chalk_1.default.blueBright('Welcome to sharp machine. ver. 1.1.2'));
+                console.log(chalk_1.default.blueBright('Welcome to sharp machine. ver. 1.1.3'));
                 console.log(chalk_1.default.blueBright('by spaceghost, https://spaceout.pl'));
                 console.log('');
                 regexImage = new RegExp('.(?:jpg|gif|png|webp)', 'g');
@@ -83,6 +83,7 @@ var run = function () { return __awaiter(void 0, void 0, void 0, function () {
                 regexPng = new RegExp('.(?:png)', 'g');
                 regexGif = new RegExp('.(?:gif)', 'g');
                 regexWebp = new RegExp('.(?:webp)', 'g');
+                regexWatermark = new RegExp('watermark.png', 'g');
                 return [4 /*yield*/, inquirer_1.default.askInputQuestions()];
             case 1:
                 location = _a.sent();
@@ -101,7 +102,9 @@ var run = function () { return __awaiter(void 0, void 0, void 0, function () {
                 process.exit();
                 return [3 /*break*/, 5];
             case 5:
-                imagesList = filesList.filter(function (file) { return file.name.match(regexImage); });
+                imagesList = filesList
+                    .filter(function (file) { return file.name.match(regexImage); })
+                    .filter(function (file) { return file.name !== 'watermark.png'; });
                 pngList = filesList.filter(function (file) { return file.name.match(regexPng); });
                 jpgList = filesList.filter(function (file) { return file.name.match(regexJpg); });
                 gifList = filesList.filter(function (file) { return file.name.match(regexGif); });
@@ -201,10 +204,22 @@ var run = function () { return __awaiter(void 0, void 0, void 0, function () {
                 customConfig = _a.sent();
                 config = JSON.parse(customConfig.customSharpConfig);
                 _a.label = 16;
-            case 16:
+            case 16: return [4 /*yield*/, inquirer_1.default.askWatermarkQuestion()];
+            case 17:
+                watermark = _a.sent();
+                if (watermark === null || watermark === void 0 ? void 0 : watermark.watermark) {
+                    watermarkPersent = filesList.filter(function (file) {
+                        return file.name.match(regexWatermark);
+                    });
+                    if (lodash.isEmpty(watermarkPersent)) {
+                        throw new Error('No watermark file found');
+                    }
+                    config.watermark = true;
+                    config.watermarkFile = watermarkPersent[0].path;
+                }
                 outDir = location.outputDir;
                 return [4 /*yield*/, inquirer_1.default.askVerboseQuestions()];
-            case 17:
+            case 18:
                 verbose = _a.sent();
                 status = new clui_1.Spinner('working...');
                 files_1.checkIfOutDirExists(outDir);
@@ -212,7 +227,7 @@ var run = function () { return __awaiter(void 0, void 0, void 0, function () {
                 return [4 /*yield*/, Promise.all(imagesList.map(function (image, index) {
                         return sharp_1.runSharp(config, image, outDir, verbose.verbose, index);
                     }))];
-            case 18:
+            case 19:
                 _a.sent();
                 !verbose.verbose && status.stop();
                 console.log(chalk_1.default.blueBright(figlet_1.default.textSync('All Done!', {
