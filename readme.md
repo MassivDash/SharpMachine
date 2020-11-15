@@ -67,6 +67,8 @@ Configuration options and types can be found at: https://sharp.pixelplumbing.com
 
 4. Show Stats (yes/no) Shows simple statistics on executed files. (Slower)
 
+5. Add watermark to images, cli will ask for watermark addition, in order to make this work put watermark.png into input folder. Sharpmachine will add the watermark image in the bottom right corner, please note that watermark should be smaller than the pictures you are optimizing
+
 ## Contribution 
 
 All requests are more than welcome 
