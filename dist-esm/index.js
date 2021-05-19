@@ -78,11 +78,11 @@ var run = function () { return __awaiter(void 0, void 0, void 0, function () {
                 console.log(chalk_1.default.blueBright('Welcome to sharp machine. ver. 1.2.5'));
                 console.log(chalk_1.default.blueBright('by spaceghost, https://spaceout.pl'));
                 console.log('');
-                regexImage = new RegExp('.(?:jpg|gif|png|webp)', 'g');
-                regexJpg = new RegExp('.(?:jpg)', 'g');
-                regexPng = new RegExp('.(?:png)', 'g');
-                regexGif = new RegExp('.(?:gif)', 'g');
-                regexWebp = new RegExp('.(?:webp)', 'g');
+                regexImage = new RegExp('.(?:jpg|JPG|jpeg|JEPG|PNG|GIF|WEBP|gif|png|webp)', 'g');
+                regexJpg = new RegExp('.(?:jpg|JPEG|JPG|jpeg)', 'g');
+                regexPng = new RegExp('.(?:png|PNG)', 'g');
+                regexGif = new RegExp('.(?:gif|GIF)', 'g');
+                regexWebp = new RegExp('.(?:webp|WEBP)', 'g');
                 regexWatermark = new RegExp('watermark.png', 'g');
                 return [4 /*yield*/, inquirer_1.default.askInputQuestions()];
             case 1:

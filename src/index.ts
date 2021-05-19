@@ -30,11 +30,14 @@ const run = async (): Promise<any> => {
 
   console.log(chalk.blueBright('by spaceghost, https://spaceout.pl'));
   console.log('');
-  const regexImage = new RegExp('.(?:jpg|gif|png|webp)', 'g');
-  const regexJpg = new RegExp('.(?:jpg)', 'g');
-  const regexPng = new RegExp('.(?:png)', 'g');
-  const regexGif = new RegExp('.(?:gif)', 'g');
-  const regexWebp = new RegExp('.(?:webp)', 'g');
+  const regexImage = new RegExp(
+    '.(?:jpg|JPG|jpeg|JEPG|PNG|GIF|WEBP|gif|png|webp)',
+    'g',
+  );
+  const regexJpg = new RegExp('.(?:jpg|JPEG|JPG|jpeg)', 'g');
+  const regexPng = new RegExp('.(?:png|PNG)', 'g');
+  const regexGif = new RegExp('.(?:gif|GIF)', 'g');
+  const regexWebp = new RegExp('.(?:webp|WEBP)', 'g');
   const regexWatermark = new RegExp('watermark.png', 'g');
   const location = await inquirerLibs.askInputQuestions();
 
