@@ -7,6 +7,8 @@ import {
   getCurrentFiles,
   checkIfInputDirExists,
   getImageSize,
+  getTotalSize,
+  changeInSizeBar,
 } from './libs/files';
 import inquirerLibs from './libs/inquirer';
 import { runSharp } from './libs/sharp';
@@ -64,13 +66,6 @@ const run = async (): Promise<any> => {
     console.error(chalk.red(`No images`));
     process.exit();
   }
-  console.log(
-    chalk.blueBright(`
-  Total images: ${chalk.white(
-    `${imagesList.length}, jpg: ${jpgList.length}, png: ${pngList.length} gif: ${gifList.length} webp: ${webpList.length}`,
-  )}
-  `),
-  );
 
   let imagesListWitfhInfo;
 
@@ -95,6 +90,28 @@ const run = async (): Promise<any> => {
   }
 
   console.table(imagesListWitfhInfo);
+
+  console.log(
+    chalk.blueBright(`
+  Total images: ${chalk.white(
+    `${imagesList.length}, jpg: ${jpgList.length}, png: ${pngList.length} gif: ${gifList.length} webp: ${webpList.length}`,
+  )}
+  `),
+  );
+
+  const totalSize = getTotalSize(imagesList);
+  const jpgSize = getTotalSize(jpgList);
+  const pngSize = getTotalSize(pngList);
+  const gifSize = getTotalSize(gifList);
+  const webpSize = getTotalSize(webpList);
+
+  console.log(
+    chalk.blueBright(`
+  Total size of images: ${chalk.white(
+    `${totalSize} MB, jpg: ${jpgSize} MB, png: ${pngSize} MB, gif: ${gifSize} MB, webp: ${webpSize} MB`,
+  )}
+  `),
+  );
 
   const whatWeDoing = await inquirerLibs.askWhatWeDoingQuestions();
   let resize;
@@ -189,6 +206,29 @@ const run = async (): Promise<any> => {
     ),
   );
   !verbose.verbose && status.stop();
+
+  let outFilesList = [];
+
+  try {
+    outFilesList = await getCurrentFiles(outDir);
+  } catch (e) {
+    throw new Error(`Error at the input location: ${e}`);
+  }
+
+  const outImagesList = outFilesList.filter((file) =>
+    file.name.match(regexImage),
+  );
+
+  const outTotalSize = getTotalSize(outImagesList);
+  const { arrayBar, extraBar, text } = changeInSizeBar(totalSize, outTotalSize);
+
+  console.log();
+  console.log(chalk.white(`before total size: ${totalSize} MB`));
+  console.log(chalk.blueBright(`after total size: ${outTotalSize} MB`));
+  console.log(chalk.blueBright(`${arrayBar}${extraBar} ${text}`));
+
+  console.log('');
+
   console.log(
     chalk.blueBright(
       figlet.textSync('All Done!', {
@@ -196,7 +236,7 @@ const run = async (): Promise<any> => {
       }),
     ),
   );
-  console.log(chalk.white(`Thanks for using sharpmachine`));
+  console.log(chalk.white(`         Thank you for using sharpmachine`));
 };
 
 export default run;

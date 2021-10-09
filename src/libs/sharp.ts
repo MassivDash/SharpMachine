@@ -5,13 +5,7 @@ import path from 'path';
 import sharp from 'sharp';
 import chalk from 'chalk';
 import { v4 as uuidv4 } from 'uuid';
-import { getImageSize } from './files';
-
-const getPercentageChange = (oldNumber: string, newNumber: string): string => {
-  const decreaseValue = Number(oldNumber) - Number(newNumber);
-
-  return ((decreaseValue / Number(oldNumber)) * 100).toFixed(2);
-};
+import { getImageSize, changeInSizeBar } from './files';
 
 export const runSharp = async (
   config: Config,
@@ -117,34 +111,14 @@ export const runSharp = async (
         .size / 1000000.0
     ).toFixed(3);
 
-    let ArrayBar = chalk.green('||||||||||||||||||||');
-    let extraBar = '';
-    let text = '0%';
-    const changeInSize = 100 - Number(getPercentageChange(before, after));
-    if (changeInSize > 100) {
-      const howManyBars = Number(((changeInSize - 100) / 5).toFixed());
-      const lineArray = new Array(howManyBars);
-      extraBar = chalk.red(`${lineArray.join('|')}`);
-      text = chalk.red(`+ ${(changeInSize - 100).toFixed(2)}%`);
-    }
-
-    if (changeInSize < 100) {
-      const howManyGreen = new Array(Number((changeInSize / 5).toFixed()));
-      const howManyGray = new Array(
-        Number(((100 - changeInSize) / 5).toFixed()),
-      );
-      console.log();
-      ArrayBar = chalk.green(`${howManyGreen.join('|')}`);
-      extraBar = chalk.gray(`${howManyGray.join('|')}`);
-      text = chalk.green(`${(changeInSize - 100).toFixed(2)}%`);
-    }
+    const { arrayBar, extraBar, text } = changeInSizeBar(before, after);
 
     console.log(
       chalk.blueBright(`
         new file: ${chalk.white(`${nameWithfileExtension}`)}
         original size: ${chalk.white(`${before} MB`)}  
         new size: ${chalk.white(`${after} MB`)}
-        ${ArrayBar}${extraBar} ${text}
+        ${arrayBar}${extraBar} ${text}
 
         resolution before: ${chalk.white(
           `${dimensions.width} px, ${dimensions.height} px`,
