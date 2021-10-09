@@ -1,0 +1,1 @@
+{"version":"1.2.6","name":"sharpmachine","dependencies":{"chalk":{"version":"4.1.0"},"clear":{"version":"0.1.0"},"clui":{"version":"0.3.6"},"figlet":{"version":"1.5.0"},"inquirer":{"version":"7.3.3"},"lodash":{"version":"4.17.21"},"mkdirp":{"version":"1.0.4"},"probe-image-size":{"version":"5.0.0"},"sharp":{"version":"0.26.2"},"uuid":{"version":"8.3.1"}}}

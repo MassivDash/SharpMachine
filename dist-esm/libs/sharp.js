@@ -46,17 +46,13 @@ var sharp_1 = __importDefault(require("sharp"));
 var chalk_1 = __importDefault(require("chalk"));
 var uuid_1 = require("uuid");
 var files_1 = require("./files");
-var getPercentageChange = function (oldNumber, newNumber) {
-    var decreaseValue = Number(oldNumber) - Number(newNumber);
-    return ((decreaseValue / Number(oldNumber)) * 100).toFixed(2);
-};
-exports.runSharp = function (config, file, outDir, verbose, index) { return __awaiter(void 0, void 0, void 0, function () {
-    var width, height, dimensions, aspectRatio, pipeline, nameWithfileExtension, changeFileExtension, before, after, ArrayBar, extraBar, text, changeInSize, howManyBars, lineArray, howManyGreen, howManyGray, e_1;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0: return [4 /*yield*/, files_1.getImageSize(file)];
+var runSharp = function (config, file, outDir, verbose, index) { return __awaiter(void 0, void 0, void 0, function () {
+    var width, height, dimensions, aspectRatio, pipeline, nameWithfileExtension, changeFileExtension, before, after, _a, arrayBar, extraBar, text, e_1;
+    return __generator(this, function (_b) {
+        switch (_b.label) {
+            case 0: return [4 /*yield*/, (0, files_1.getImageSize)(file)];
             case 1:
-                dimensions = _a.sent();
+                dimensions = _b.sent();
                 aspectRatio = dimensions.width / dimensions.height;
                 // If the width/height are both set, we're cropping so just return
                 // that.
@@ -79,7 +75,7 @@ exports.runSharp = function (config, file, outDir, verbose, index) { return __aw
                     width = dimensions.width;
                 }
                 try {
-                    pipeline = sharp_1.default(file.path);
+                    pipeline = (0, sharp_1.default)(file.path);
                     if (!config.rotate) {
                         pipeline.rotate();
                     }
@@ -104,7 +100,7 @@ exports.runSharp = function (config, file, outDir, verbose, index) { return __aw
                     }
                 }
                 if (config.newName) {
-                    nameWithfileExtension = config.newName + "-" + (index + 1) + (config.hashOn ? "-" + uuid_1.v4() : "") + "." + (changeFileExtension
+                    nameWithfileExtension = config.newName + "-" + (index + 1) + (config.hashOn ? "-" + (0, uuid_1.v4)() : "") + "." + (changeFileExtension
                         ? config.toFormat
                         : file.name.slice(file.name.length - 3));
                 }
@@ -131,44 +127,28 @@ exports.runSharp = function (config, file, outDir, verbose, index) { return __aw
                     })
                         .toFile(path_1.default.join(process.cwd(), outDir, '/', nameWithfileExtension))];
             case 2:
-                _a.sent();
+                _b.sent();
                 if (!verbose) return [3 /*break*/, 5];
                 return [4 /*yield*/, (fs_1.default.statSync(file.path).size / 1000000.0).toFixed(3)];
             case 3:
-                before = _a.sent();
+                before = _b.sent();
                 return [4 /*yield*/, (fs_1.default.statSync(path_1.default.join(process.cwd(), '/', outDir, nameWithfileExtension))
                         .size / 1000000.0).toFixed(3)];
             case 4:
-                after = _a.sent();
-                ArrayBar = chalk_1.default.green('||||||||||||||||||||');
-                extraBar = '';
-                text = '0%';
-                changeInSize = 100 - Number(getPercentageChange(before, after));
-                if (changeInSize > 100) {
-                    howManyBars = Number(((changeInSize - 100) / 5).toFixed());
-                    lineArray = new Array(howManyBars);
-                    extraBar = chalk_1.default.red("" + lineArray.join('|'));
-                    text = chalk_1.default.red("+ " + (changeInSize - 100).toFixed(2) + "%");
-                }
-                if (changeInSize < 100) {
-                    howManyGreen = new Array(Number((changeInSize / 5).toFixed()));
-                    howManyGray = new Array(Number(((100 - changeInSize) / 5).toFixed()));
-                    console.log();
-                    ArrayBar = chalk_1.default.green("" + howManyGreen.join('|'));
-                    extraBar = chalk_1.default.gray("" + howManyGray.join('|'));
-                    text = chalk_1.default.green((changeInSize - 100).toFixed(2) + "%");
-                }
-                console.log(chalk_1.default.blueBright("\n        new file: " + chalk_1.default.white("" + nameWithfileExtension) + "\n        original size: " + chalk_1.default.white(before + " MB") + "  \n        new size: " + chalk_1.default.white(after + " MB") + "\n        " + ArrayBar + extraBar + " " + text + "\n\n        resolution before: " + chalk_1.default.white(dimensions.width + " px, " + dimensions.height + " px") + ",\n        resolution after: " + chalk_1.default.white(width + " px, " + height + " px")));
-                _a.label = 5;
+                after = _b.sent();
+                _a = (0, files_1.changeInSizeBar)(before, after), arrayBar = _a.arrayBar, extraBar = _a.extraBar, text = _a.text;
+                console.log(chalk_1.default.blueBright("\n        new file: " + chalk_1.default.white("" + nameWithfileExtension) + "\n        original size: " + chalk_1.default.white(before + " MB") + "  \n        new size: " + chalk_1.default.white(after + " MB") + "\n        " + arrayBar + extraBar + " " + text + "\n\n        resolution before: " + chalk_1.default.white(dimensions.width + " px, " + dimensions.height + " px") + ",\n        resolution after: " + chalk_1.default.white(width + " px, " + height + " px")));
+                _b.label = 5;
             case 5:
-                _a.trys.push([5, 7, , 8]);
+                _b.trys.push([5, 7, , 8]);
                 return [4 /*yield*/, pipeline];
-            case 6: return [2 /*return*/, _a.sent()];
+            case 6: return [2 /*return*/, _b.sent()];
             case 7:
-                e_1 = _a.sent();
+                e_1 = _b.sent();
                 throw new Error("Pipeline error: " + e_1);
             case 8: return [2 /*return*/];
         }
     });
 }); };
+exports.runSharp = runSharp;
 //# sourceMappingURL=sharp.js.map

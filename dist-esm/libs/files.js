@@ -39,14 +39,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getImageSize = exports.toArray = exports.checkIfOutDirExists = exports.checkIfInputDirExists = exports.getDirectories = exports.getCurrentFiles = void 0;
+exports.changeInSizeBar = exports.getTotalSize = exports.getImageSize = exports.toArray = exports.checkIfOutDirExists = exports.checkIfInputDirExists = exports.getDirectories = exports.getCurrentFiles = void 0;
 /* eslint-disable no-console */
 var path_1 = __importDefault(require("path"));
 var fs_1 = __importDefault(require("fs"));
 var mkdirp_1 = __importDefault(require("mkdirp"));
 var probe_image_size_1 = __importDefault(require("probe-image-size"));
 var chalk_1 = __importDefault(require("chalk"));
-exports.getCurrentFiles = function (dir) {
+var getCurrentFiles = function (dir) {
     var absoluteDir = "" + path_1.default.join(process.cwd(), '/', dir);
     return fs_1.default
         .readdirSync(absoluteDir)
@@ -56,40 +56,45 @@ exports.getCurrentFiles = function (dir) {
         return list.concat(isDir ? [] : [{ path: absolutePath, name: name }]);
     }, []);
 };
-exports.getDirectories = function () {
+exports.getCurrentFiles = getCurrentFiles;
+var getDirectories = function () {
     var absoluteDir = "" + path_1.default.join(process.cwd(), '/');
     return fs_1.default
         .readdirSync(absoluteDir, { withFileTypes: true })
         .filter(function (dirent) { return dirent.isDirectory(); })
         .map(function (dirent) { return dirent.name; });
 };
-exports.checkIfInputDirExists = function (dir) {
+exports.getDirectories = getDirectories;
+var checkIfInputDirExists = function (dir) {
     if (!fs_1.default.existsSync(dir)) {
         console.error(chalk_1.default.red('Directory with name:'), chalk_1.default.white(dir), chalk_1.default.red('does not exist')),
             console.error(chalk_1.default.red("Did you want any one of these ?"));
-        console.table(exports.getDirectories());
+        console.table((0, exports.getDirectories)());
         process.exit();
     }
 };
-exports.checkIfOutDirExists = function (dir) {
+exports.checkIfInputDirExists = checkIfInputDirExists;
+var checkIfOutDirExists = function (dir) {
     if (!fs_1.default.existsSync(dir)) {
         mkdirp_1.default.sync(dir);
     }
 };
-exports.toArray = function (buf) {
+exports.checkIfOutDirExists = checkIfOutDirExists;
+var toArray = function (buf) {
     var arr = new Array(buf.length);
     for (var i = 0; i < buf.length; i++) {
         arr[i] = buf[i];
     }
     return arr;
 };
-exports.getImageSize = function (file) { return __awaiter(void 0, void 0, void 0, function () {
+exports.toArray = toArray;
+var getImageSize = function (file) { return __awaiter(void 0, void 0, void 0, function () {
     var dimensions, e_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
                 _a.trys.push([0, 2, , 3]);
-                return [4 /*yield*/, probe_image_size_1.default.sync(exports.toArray(fs_1.default.readFileSync(file.path || '')))];
+                return [4 /*yield*/, probe_image_size_1.default.sync((0, exports.toArray)(fs_1.default.readFileSync(file.path || '')))];
             case 1:
                 dimensions = _a.sent();
                 return [2 /*return*/, dimensions];
@@ -100,4 +105,38 @@ exports.getImageSize = function (file) { return __awaiter(void 0, void 0, void 0
         }
     });
 }); };
+exports.getImageSize = getImageSize;
+var getTotalSize = function (files) {
+    var size = files.reduce(function (total, file) {
+        return total + fs_1.default.statSync(file.path).size;
+    }, 0);
+    return Number((size / 1000000.0).toFixed(3));
+};
+exports.getTotalSize = getTotalSize;
+var getPercentageChange = function (oldNumber, newNumber) {
+    var decreaseValue = Number(oldNumber) - Number(newNumber);
+    return ((decreaseValue / Number(oldNumber)) * 100).toFixed(2);
+};
+var changeInSizeBar = function (before, after) {
+    var arrayBar = chalk_1.default.green('||||||||||||||||||||');
+    var extraBar = '';
+    var text = '0%';
+    var changeInSize = 100 - Number(getPercentageChange(before, after));
+    if (changeInSize > 100) {
+        var howManyBars = Number(((changeInSize - 100) / 5).toFixed());
+        var lineArray = new Array(howManyBars);
+        extraBar = chalk_1.default.red("" + lineArray.join('|'));
+        text = chalk_1.default.red("+ " + (changeInSize - 100).toFixed(2) + "%");
+    }
+    if (changeInSize < 100) {
+        var howManyGreen = new Array(Number((changeInSize / 5).toFixed()));
+        var howManyGray = new Array(Number(((100 - changeInSize) / 5).toFixed()));
+        console.log();
+        arrayBar = chalk_1.default.green("" + howManyGreen.join('|'));
+        extraBar = chalk_1.default.gray("" + howManyGray.join('|'));
+        text = chalk_1.default.green((changeInSize - 100).toFixed(2) + "%");
+    }
+    return { arrayBar: arrayBar, extraBar: extraBar, text: text };
+};
+exports.changeInSizeBar = changeInSizeBar;
 //# sourceMappingURL=files.js.map

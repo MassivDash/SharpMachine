@@ -69,11 +69,11 @@ var fs_1 = require("fs");
 var figlet_1 = __importDefault(require("figlet"));
 var clear_1 = __importDefault(require("clear"));
 var run = function () { return __awaiter(void 0, void 0, void 0, function () {
-    var regexImage, regexJpg, regexPng, regexGif, regexWebp, regexWatermark, location, filesList, e_1, toFormat, imagesList, pngList, jpgList, gifList, webpList, imagesListWitfhInfo, e_2, whatWeDoing, resize, rename, config, controls, newName, customConfig, watermark, watermarkPersent, outDir, verbose, status;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
+    var regexImage, regexJpg, regexPng, regexGif, regexWebp, regexWatermark, location, filesList, e_1, toFormat, imagesList, pngList, jpgList, gifList, webpList, imagesListWitfhInfo, e_2, totalSize, jpgSize, pngSize, gifSize, webpSize, whatWeDoing, resize, rename, config, controls, newName, customConfig, watermark, watermarkPersent, outDir, verbose, status, outFilesList, e_3, outImagesList, outTotalSize, _a, arrayBar, extraBar, text;
+    return __generator(this, function (_b) {
+        switch (_b.label) {
             case 0:
-                clear_1.default();
+                (0, clear_1.default)();
                 console.log(chalk_1.default.blueBright(figlet_1.default.textSync('Sharp Machine', { horizontalLayout: 'full' })));
                 console.log(chalk_1.default.blueBright('Welcome to sharp machine. ver. 1.2.5'));
                 console.log(chalk_1.default.blueBright('by spaceghost, https://spaceout.pl'));
@@ -86,18 +86,18 @@ var run = function () { return __awaiter(void 0, void 0, void 0, function () {
                 regexWatermark = new RegExp('watermark.png', 'g');
                 return [4 /*yield*/, inquirer_1.default.askInputQuestions()];
             case 1:
-                location = _a.sent();
-                files_1.checkIfInputDirExists(location.inputDir);
+                location = _b.sent();
+                (0, files_1.checkIfInputDirExists)(location.inputDir);
                 filesList = [];
-                _a.label = 2;
+                _b.label = 2;
             case 2:
-                _a.trys.push([2, 4, , 5]);
-                return [4 /*yield*/, files_1.getCurrentFiles(location.inputDir)];
+                _b.trys.push([2, 4, , 5]);
+                return [4 /*yield*/, (0, files_1.getCurrentFiles)(location.inputDir)];
             case 3:
-                filesList = _a.sent();
+                filesList = _b.sent();
                 return [3 /*break*/, 5];
             case 4:
-                e_1 = _a.sent();
+                e_1 = _b.sent();
                 throw new Error("Error at the input location: " + e_1);
             case 5:
                 imagesList = filesList
@@ -111,52 +111,58 @@ var run = function () { return __awaiter(void 0, void 0, void 0, function () {
                     console.error(chalk_1.default.red("No images"));
                     process.exit();
                 }
-                console.log(chalk_1.default.blueBright("\n  Total images: " + chalk_1.default.white(imagesList.length + ", jpg: " + jpgList.length + ", png: " + pngList.length + " gif: " + gifList.length + " webp: " + webpList.length) + "\n  "));
-                _a.label = 6;
+                _b.label = 6;
             case 6:
-                _a.trys.push([6, 8, , 9]);
+                _b.trys.push([6, 8, , 9]);
                 return [4 /*yield*/, Promise.all(imagesList.map(function (item) { return __awaiter(void 0, void 0, void 0, function () {
-                        var dimenstions, e_3;
+                        var dimenstions, e_4;
                         return __generator(this, function (_a) {
                             switch (_a.label) {
                                 case 0:
                                     _a.trys.push([0, 2, , 3]);
-                                    return [4 /*yield*/, files_1.getImageSize(item)];
+                                    return [4 /*yield*/, (0, files_1.getImageSize)(item)];
                                 case 1:
                                     dimenstions = _a.sent();
                                     return [2 /*return*/, {
                                             absolutePath: item.path,
                                             name: item.name,
                                             dimensions: dimenstions.width + "px x " + dimenstions.height + "px",
-                                            size: (fs_1.statSync(item.path).size / 1000000.0).toFixed(3) + "mb",
+                                            size: ((0, fs_1.statSync)(item.path).size / 1000000.0).toFixed(3) + "mb",
                                         }];
                                 case 2:
-                                    e_3 = _a.sent();
-                                    throw new Error("Error at file " + item.path + ": " + e_3);
+                                    e_4 = _a.sent();
+                                    throw new Error("Error at file " + item.path + ": " + e_4);
                                 case 3: return [2 /*return*/];
                             }
                         });
                     }); }))];
             case 7:
-                imagesListWitfhInfo = _a.sent();
+                imagesListWitfhInfo = _b.sent();
                 return [3 /*break*/, 9];
             case 8:
-                e_2 = _a.sent();
+                e_2 = _b.sent();
                 throw new Error("List of images caught error: " + e_2);
             case 9:
                 console.table(imagesListWitfhInfo);
+                console.log(chalk_1.default.blueBright("\n  Total images: " + chalk_1.default.white(imagesList.length + ", jpg: " + jpgList.length + ", png: " + pngList.length + " gif: " + gifList.length + " webp: " + webpList.length) + "\n  "));
+                totalSize = (0, files_1.getTotalSize)(imagesList);
+                jpgSize = (0, files_1.getTotalSize)(jpgList);
+                pngSize = (0, files_1.getTotalSize)(pngList);
+                gifSize = (0, files_1.getTotalSize)(gifList);
+                webpSize = (0, files_1.getTotalSize)(webpList);
+                console.log(chalk_1.default.blueBright("\n  Total size of images: " + chalk_1.default.white(totalSize + " MB, jpg: " + jpgSize + " MB, png: " + pngSize + " MB, gif: " + gifSize + " MB, webp: " + webpSize + " MB") + "\n  "));
                 return [4 /*yield*/, inquirer_1.default.askWhatWeDoingQuestions()];
             case 10:
-                whatWeDoing = _a.sent();
+                whatWeDoing = _b.sent();
                 console.log(whatWeDoing);
                 if (!(whatWeDoing.WhatWeDoing !== 'Custom config')) return [3 /*break*/, 13];
                 return [4 /*yield*/, inquirer_1.default.askResizeQuestion()];
             case 11:
-                resize = _a.sent();
+                resize = _b.sent();
                 return [4 /*yield*/, inquirer_1.default.askRenameQuestion()];
             case 12:
-                rename = _a.sent();
-                _a.label = 13;
+                rename = _b.sent();
+                _b.label = 13;
             case 13:
                 if (whatWeDoing.WhatWeDoing === 'Default optimizing to webp') {
                     toFormat = 'webp';
@@ -182,7 +188,7 @@ var run = function () { return __awaiter(void 0, void 0, void 0, function () {
                 if (!(resize === null || resize === void 0 ? void 0 : resize.AreWeResizing)) return [3 /*break*/, 15];
                 return [4 /*yield*/, inquirer_1.default.askSharpQuestions()];
             case 14:
-                controls = _a.sent();
+                controls = _b.sent();
                 config = {
                     quality: Number(controls.quality),
                     rotate: false,
@@ -200,25 +206,25 @@ var run = function () { return __awaiter(void 0, void 0, void 0, function () {
                     toFormat: controls.convert === 'no' ? toFormat : controls.convert,
                     useMozJpeg: false,
                 };
-                _a.label = 15;
+                _b.label = 15;
             case 15:
                 if (!(rename === null || rename === void 0 ? void 0 : rename.RenameFiles)) return [3 /*break*/, 17];
                 return [4 /*yield*/, inquirer_1.default.askForNewName()];
             case 16:
-                newName = _a.sent();
+                newName = _b.sent();
                 config.newName = newName.fileName;
                 config.hashOn = newName.addHash;
-                _a.label = 17;
+                _b.label = 17;
             case 17:
                 if (!(whatWeDoing.WhatWeDoing === 'Custom config')) return [3 /*break*/, 19];
                 return [4 /*yield*/, inquirer_1.default.askCustomSharpQuestions()];
             case 18:
-                customConfig = _a.sent();
+                customConfig = _b.sent();
                 config = JSON.parse(customConfig.customSharpConfig);
-                _a.label = 19;
+                _b.label = 19;
             case 19: return [4 /*yield*/, inquirer_1.default.askWatermarkQuestion()];
             case 20:
-                watermark = _a.sent();
+                watermark = _b.sent();
                 if (watermark === null || watermark === void 0 ? void 0 : watermark.watermark) {
                     watermarkPersent = filesList.filter(function (file) {
                         return file.name.match(regexWatermark);
@@ -232,20 +238,42 @@ var run = function () { return __awaiter(void 0, void 0, void 0, function () {
                 outDir = location.outputDir;
                 return [4 /*yield*/, inquirer_1.default.askVerboseQuestions()];
             case 21:
-                verbose = _a.sent();
+                verbose = _b.sent();
                 status = new clui_1.Spinner('working...');
-                files_1.checkIfOutDirExists(outDir);
+                (0, files_1.checkIfOutDirExists)(outDir);
                 !verbose.verbose && status.start();
                 return [4 /*yield*/, Promise.all(imagesList.map(function (image, index) {
-                        return sharp_1.runSharp(config, image, outDir, verbose.verbose, index);
+                        return (0, sharp_1.runSharp)(config, image, outDir, verbose.verbose, index);
                     }))];
             case 22:
-                _a.sent();
+                _b.sent();
                 !verbose.verbose && status.stop();
+                outFilesList = [];
+                _b.label = 23;
+            case 23:
+                _b.trys.push([23, 25, , 26]);
+                return [4 /*yield*/, (0, files_1.getCurrentFiles)(outDir)];
+            case 24:
+                outFilesList = _b.sent();
+                return [3 /*break*/, 26];
+            case 25:
+                e_3 = _b.sent();
+                throw new Error("Error at the input location: " + e_3);
+            case 26:
+                outImagesList = outFilesList.filter(function (file) {
+                    return file.name.match(regexImage);
+                });
+                outTotalSize = (0, files_1.getTotalSize)(outImagesList);
+                _a = (0, files_1.changeInSizeBar)(totalSize, outTotalSize), arrayBar = _a.arrayBar, extraBar = _a.extraBar, text = _a.text;
+                console.log();
+                console.log(chalk_1.default.white("before total size: " + totalSize + " MB"));
+                console.log(chalk_1.default.blueBright("after total size: " + outTotalSize + " MB"));
+                console.log(chalk_1.default.blueBright("" + arrayBar + extraBar + " " + text));
+                console.log('');
                 console.log(chalk_1.default.blueBright(figlet_1.default.textSync('All Done!', {
                     horizontalLayout: 'default',
                 })));
-                console.log(chalk_1.default.white("Thanks for using sharpmachine"));
+                console.log(chalk_1.default.white("         Thank you for using sharpmachine"));
                 return [2 /*return*/];
         }
     });
