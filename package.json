@@ -32,7 +32,7 @@
     "lodash": "^4.17.20",
     "mkdirp": "^1.0.4",
     "probe-image-size": "^7.2.1",
-    "sharp": "^0.29.1",
+    "sharp": "^0.30.5",
     "uuid": "^8.3.1"
   },
   "bin": {
